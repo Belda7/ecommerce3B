@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<div class="container py-4">
+    <div class="card-title" th:remove="tag"></div>
+    <form method="post" th:action="@{/client/formClient}" th:object="${client}">
+        <div  th:remove="tag">
+            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+            </ul>
+        </div>
+        <fieldset>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" th:text="'Client'"></label>
+                <div class="col-sm-6">
+                    <input th:field="*{user}" th:value="${client.getUser()}" class="form-control"
+                           disabled="disabled"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Nombre</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{name}" th:value="${client.getName()}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/>
+                    <small class="form-text text-danger"
+                        th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Apellidos</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{secondName}" th:value="${client.getSecondName()}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('secondName')}" th:errors="*{secondName}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">eMail</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{email}" th:value="${client.getEmail()}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Imágen</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{img}" th:value="${client.getImg()}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('img')}" th:errors="*{img}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <input type="text" id="idClient" th:field="*{id}" th:value="${client.getId()}" style="visibility:hidden"/>
+                <input type="password" th:field="*{password}" style="visibility:hidden" />
+                <input type="text" th:field="*{status}" th:value="${client.getStatus()}" style="visibility:hidden"/>
+                <input type="text" th:field="*{type}" th:value="${client.getType()}" style="visibility:hidden"/>
+                <input id="submit" type="submit" th:value="${title}" class="btn btn-secondary" />
+            </div>
+
+            <div th:if="${not #lists.isEmpty(client.address)}"  class="form-group row">
+                <label class="col-sm-2 col-form-label">Direcciones: </label>
+                <table class="py-3">
+                    <tr>
+                        <td><input type="text" id="direccion" name="direccion" class="form-control" />
+                        </td>
+                        <td><a href="#" id="newAddress" class="btn btn-success btn-xs" onclick="addAddress();">+</a></td>
+                    </tr>
+                </table>
+
+                <table th:if="${not #lists.isEmpty(client.address)}" id="plantillaItemsAddress" class="table table-sm table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th class="d-none"></th>
+                        <th>Address</th>
+                        <th>Eliminar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="address, iter: ${client.address}" th:id="'address_'+${iter.index}">
+                        <td class="d-none"><input type="hidden" th:value="${iter.index}" name="item_id[]" /></td>
+                        <td th:text="${address}"></td>
+                        <td><a th:id="'${delete_}' + ${iter.index}" href="#" class="btn btn-danger btn-xs" onclick="deleteAddress(this.value);">X</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </fieldset>
+    </form>
+
+</div>
+<footer th:replace="layout/layout :: footer"></footer>
+<script th:replace="users/details/js/addItems :: javascript"></script>
+</body>
+</html>

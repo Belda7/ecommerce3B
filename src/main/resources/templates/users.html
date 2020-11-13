@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <div class="container py-4">
+        <h1 th:text="${title}"></h1>
+        <table class="table table-striped" th:object="${clients}">
+            <thead class="bg-light">
+            <tr>
+                <th>id</th>
+                <th>user</th>
+                <th>nombre</th>
+                <th>apellido</th>
+                <th>email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client: ${clients}">
+                <td th:text="${client.getId()}">Id</td>
+                <td th:text="${client.getUser()}">Username</td>
+                <td th:text="${client.getName()}">Name</td>
+                <td th:text="${client.getSecondName()}">SeconName</td>
+                <td th:text="${client.getEmail()}">email</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

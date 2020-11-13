@@ -1,0 +1,106 @@
+/* Mobile first */
+
+/*
+ * Maincolor = #7B86FF
+ * Whiter = #C7CCFF;
+ * Darkest = #3D4380;
+ * Darker = #636680;
+ * Dark = #626BCC;
+ * Green = #79CC4E
+ * Greener = #70B34D;
+ * Pink = FFB394;
+ */
+
+* {
+    font-family: Tahoma, Calibri, "Comic Sans MS";
+    text-align: center;
+}
+/* Header */
+header nav ul {
+    display: none;
+}
+
+header span {
+    font-size: 10em;
+    color:#70B34D;
+}
+
+header span:hover {
+    color: #79CC4E;
+    text-decoration: none;
+}
+
+/* Footer */
+
+footer nav ul {
+     display: flex;
+     justify-content: space-evenly;
+}
+
+footer {
+    background-color: #343a40;
+}
+
+/* Menu */
+nav ul li {
+    color: #C7CCFF;
+    font-weight: bolder;
+}
+
+.mobile-menu {
+    margin-right: 20%;
+}
+
+.mobile-menu:hover .custom-dropdown {
+    color: #FFB394;
+}
+
+.custom-dropdown {
+    font-size: 10em;
+    color: #FFB394;
+}
+
+/* Main content*/
+h1 {
+    font-size: 4rem;
+    color:#70B34D;
+}
+
+span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #70B34D;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+#products a:hover {
+    text-decoration: none;
+}
+
+#products a:hover span {
+    color: #79CC4E;
+}
+
+/* iPad */
+@media screen and (min-width: 768px) {
+
+}
+
+/* Desktop */
+@media screen and (min-width: 1224px) {
+    .mobile-menu {
+        display: none;
+    }
+}
+
+/* Large desktop */
+@media screen and (min-width: 1824px) {
+
+}

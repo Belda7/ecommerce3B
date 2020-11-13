@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="head">
+        <meta charset="UTF-8">
+        <title th:text="${title} + ' - eCommerce 3B'"></title>
+        <!--Reset browser styles-->
+        <link rel="stylesheet" type="text/css" href="/reset_browser_styles.css">
+        <!--Bootstrap & jquery-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+        <!--Link to custom css-->
+        <link rel="stylesheet" type="text/css" href="/style.css"/>
+        <!--Allows the use of favicons: FONT AWESOME: https://fontawesome.com/icons?d=gallery-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+              crossorigin="anonymous">
+    </head>
+    <body>
+        <!--Header-->
+        <header th:fragment="header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div id="menu">
+                    <a href="/">
+                        <span>
+                            3B
+                        </span>
+                    </a>
+                </div>
+                <!--Mobile menu-->
+                <div class="mobile-menu">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link custom-dropdown" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-hamburger"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/products">Products</a>
+                                <a class="dropdown-item" href="/categories">Categories</a>
+                                <a class="dropdown-item" href="/companies">Companies</a>
+                                <a class="dropdown-item" href="/contact-us">Contact</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Account</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--Header navigation-->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/categories">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/companies">Companies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact-us">Contact</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav navbar-right">
+                        <li sec:authorize="!isAuthenticated()">
+                            <a class="btn btn-outline-primary" th:href="@{/login}">Login</a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()" class="dropdown show">
+                            <a class="btn dropdown-toggle btn-outline-success my-2 my-sm-0" href="#" role="button"
+                               id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                               sec:authentication="name">
+
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <form id="logoutForm" th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" onclick="document.getElementById('logoutForm').submit();" type="submit">Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" id="searchValue"
+                               placeholder="Type something here..." aria-label="Search">
+                        <a class="btn btn-outline-success my-2 my-sm-0 text-white" id="search">Search</a>
+                    </form>
+                </div>
+            </nav>
+            <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+            <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+            <div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+            <div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+        </header>
+        <!--Content comes here-->
+        <!--Title-->
+        <div class="container py-5" th:fragment="title">
+            <h1 th:text="${title}"></h1>
+        </div>
+        <!--Company code-->
+        <div id="company" class="row" th:fragment="company">
+            <div th:id="'company' + ${company.getName()}"
+                 class="col-sm-12 col-md-6 col-lg-4 col-xl-3 align-content-center">
+                <div>
+                    <span th:text="${company.getName()}"></span>
+                    <br>
+                    <img th:src="${company.getImage()}"/>
+                </div>
+            </div>
+        </div>
+        <!--Product-->
+        <ul id="products" class="row" th:fragment="products">
+            <li th:each="product : ${products}"
+                th:id="'product' + ${product.getIdProduct()}"
+                th:if="${product.isVisible()}"
+                class="col-sm-12 col-md-6 col-lg-4 col-xl-3 align-content-center">
+                <a th:href="'/products/' + ${product.getIdProduct()}">
+                    <span th:text="${product.getName()}"></span>
+                    <br>
+                    <img th:src="${product.getImage()}">
+                    <br>
+                    <span th:text="${'€ ' + product.getPrice()}"></span>
+                </a>
+            </li>
+        </ul>
+        <!--Footer-->
+        <footer th:fragment="footer" class="text-white-50">
+            <div>
+                <!--Footer navigation-->
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="/products">
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/categories">
+                                Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/companies">
+                                Companies
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/contact-us">
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div>
+                <!-- Begin Mailchimp Signup Form -->
+                <div id="mc_embed_signup" class="text-white-50">
+                    <form action="https://tecnocampus.us5.list-manage.com/subscribe/post?u=6e9d4b123d8807ae3fdb7895a&amp;id=52640c59ed"
+                          method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+                          class="validate" target="_blank" novalidate>
+                        <div id="mc_embed_signup_scroll">
+                            <h2>Subscribe to our newsletter!</h2>
+                            <div class="indicates-required">
+                                <span class="asterisk">*</span>
+                                indicates required
+                            </div>
+                            <div class="mc-field-group">
+                                <label for="mce-EMAIL">Email Address
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                            </div>
+                            <div class="mc-field-group">
+                                <label for="mce-FNAME">First Name
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <input type="text" value="" name="FNAME" class="required" id="mce-FNAME">
+                            </div>
+                            <div class="mc-field-group">
+                                <label for="mce-LNAME">Last Name
+                                    <span class="asterisk">*</span>
+                                </label>
+                                <input type="text" value="" name="LNAME" class="required" id="mce-LNAME">
+                            </div>
+                            <div class="mc-field-group size1of2">
+                                <label for="mce-BIRTHDAY-month">Birthday</label>
+                                <div class="datefield">
+                                    <span class="subfield dayfield">
+                                        <input class="birthday " type="text" pattern="[0-9]*" value="" placeholder="DD"
+                                               size="2" maxlength="2" name="BIRTHDAY[day]" id="mce-BIRTHDAY-day">
+                                    </span>
+                                    /
+                                    <span class="subfield monthfield">
+                                        <input class="birthday " type="text" pattern="[0-9]*" value="" placeholder="MM"
+                                               size="2" maxlength="2" name="BIRTHDAY[month]" id="mce-BIRTHDAY-month">
+                                    </span>
+                                    <span class="small-meta nowrap">( dd / mm )</span>
+                                </div>
+                            </div>
+                            <div id="mce-responses" class="clear">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                <input type="text" name="b_6e9d4b123d8807ae3fdb7895a_52640c59ed" tabindex="-1" value="">
+                            </div>
+                            <div class="clear">
+                                <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"
+                                       class="button">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <script type='text/javascript'
+                        src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+                <script type='text/javascript'>(function ($) {
+                    window.fnames = new Array();
+                    window.ftypes = new Array();
+                    fnames[0] = 'EMAIL';
+                    ftypes[0] = 'email';
+                    fnames[1] = 'FNAME';
+                    ftypes[1] = 'text';
+                    fnames[2] = 'LNAME';
+                    ftypes[2] = 'text';
+                    fnames[3] = 'ADDRESS';
+                    ftypes[3] = 'address';
+                    fnames[4] = 'PHONE';
+                    ftypes[4] = 'phone';
+                    fnames[5] = 'BIRTHDAY';
+                    ftypes[5] = 'birthday';
+                }(jQuery));
+                var $mcj = jQuery.noConflict(true);</script>
+                <!--End mc_embed_signup-->
+            </div>
+            <div>
+                <p sec:authorize="isAuthenticated()">
+                    Usuario logeado:
+                    <span sec:authentication="name"></span>
+                    | Roles:
+                    <span sec:authentication="principal.authorities"></span>
+                </p>
+                <p>
+                    Powered by
+                    <a href="https://projects.spring.io/spring-boot/">Spring Boot</a>
+                    y<a href="http://www.thymeleaf.org">Thymeleaf</a>.
+                </p>
+                <p>
+                    Este proyecto fue desarrollado en IDE Intellij IDEA + Spring Plugins (STS Spring Tool), por David
+                    Belda, Ana Belén Cortés y Ruben Szekér,
+                    <br/>
+                    para la asignatura de Laboratorio de Aplicaciondes de Internet 2019-2020,
+                    <br/>
+                    Inc. Todos los derechos reservados. Términos de uso y privacidad.
+                    <br/>
+                </p>
+            </div>
+            <!-- Custom Javascript -->
+            <script th:src="@{/js/customJavascript.js}"></script>
+            <!-- Bootstrap -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                    crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                    crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                    crossorigin="anonymous"></script>
+        </footer>
+    </body>
+</html>

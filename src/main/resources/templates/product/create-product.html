@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <form method="POST" th:object="${newProduct}">
+        <div class="errors" th:if="${#fields.hasErrors()}">
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}"
+                    th:text="${err}">Input is incorrect</li>
+            </ul>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('idProduct')} ? 'error'">ID of product</label>:
+                </td>
+                <td>
+                    <input type="number" th:field="*{idProduct}" th:class="${#fields.hasErrors('idProduct')} ? 'error'" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('name')} ? 'error'">Name of product</label>:
+                </td>
+                <td>
+                    <input type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'error'" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('description')} ? 'error'">Description of product</label>:
+                </td>
+                <td>
+                    <input type="text" th:field="*{description}" th:class="${#fields.hasErrors('description')} ? 'error'" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('price')} ? 'error'">Price of product</label>:
+                </td>
+                <td>
+                    <input type="number" th:field="*{price}" th:class="${#fields.hasErrors('price')} ? 'error'" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('stock')} ? 'error'">Stock available</label>:
+                </td>
+                <td>
+                    <input type="number" th:field="*{stock}" th:class="${#fields.hasErrors('stock')} ? 'error'" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('company')} ? 'error'">Company that produced product</label>:
+                </td>
+                <td>
+                    <select name="company">
+                        <option th:each="company : ${companies}"
+                                th:text="${company.getName()}"
+                                th:field="*{company}"
+                                th:class="${#fields.hasErrors('company')} ? 'error'"
+                                th:value="${company.getName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('category')} ? 'error'">Category of product</label>:
+                </td>
+                <td>
+                    <select name="category">
+                        <option th:each="category : ${categories}"
+                                th:text="${category.getNameCategory()}"
+                                th:field="*{category}"
+                                th:class="${#fields.hasErrors('category')} ? 'error'"
+                                th:value="${category.getNameCategory()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label th:class="${#fields.hasErrors('visible')} ? 'error'">Visiblity</label>:
+                </td>
+                <td>
+                    <input type="radio" name="visible" th:value="true" th:field="*{visible}"> Visible<br>
+                    <input type="radio" name="visible" th:value="false" th:field="*{visible}"> Invisible
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" th:value="${creation ? 'Create product' : 'Edit product'}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

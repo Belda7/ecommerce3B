@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <div class="container">
+        <ul th:replace="layout/layout :: products"></ul>
+        <div th:if="${products.size() <= 0}">
+            <p>There are no products added yet.</p>
+        </div>
+    </div>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

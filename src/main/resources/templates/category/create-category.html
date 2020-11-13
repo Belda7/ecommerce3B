@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <div class="container py-4">
+        <form method="POST" th:object="${newCategory}">
+            <div class="errors" th:if="${#fields.hasErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}"
+                        th:text="${err}">Input is incorrect</li>
+                </ul>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <label th:class="${#fields.hasErrors('nameCategory')} ? 'error'">Name of category</label>:
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{nameCategory}" th:class="${#fields.hasErrors('nameCategory')} ? 'error'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" th:value="${creation ? 'Create category' : 'Edit category'}" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

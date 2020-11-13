@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <p>It seems like something went wrong. You can always go back to the <a href="/">homepage</a> or <a href="#" onclick="window.history.go(-1); return false;">go back to the previous page</a>.</p>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

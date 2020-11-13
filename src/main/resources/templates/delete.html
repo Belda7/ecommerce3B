@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    Are you sure that you want to delete <span th:text="${identifier}"></span>?
+    <form method="post">
+        <input type="submit" value="Yes, I'm sure">
+    </form>
+    <input action="action" onclick="window.history.go(-1); return false;" type="button" value="No, I'm not sure">
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

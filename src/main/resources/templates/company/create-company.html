@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <div class="container py-4">
+
+        <form method="POST" th:object="${company}">
+            <div class="errors" th:if="${#fields.hasErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}"
+                        th:text="${err}">Input is incorrect</li>
+                </ul>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <label th:class="${#fields.hasErrors('name')} ? 'error'">Name of the company</label>:
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{name}" th:class="${#fields.hasErrors('name')} ? 'error'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label th:class="${#fields.hasErrors('phoneNumber')} ? 'error'">Phone number of the company</label>:
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{phoneNumber}" th:class="${#fields.hasErrors('phoneNumber')} ? 'error'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label th:class="${#fields.hasErrors('email')} ? 'error'">Email of the company</label>:
+                    </td>
+                    <td>
+                        <input type="email" th:field="*{email}" th:class="${#fields.hasErrors('email')} ? 'error'" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label th:class="${#fields.hasErrors('sellerId')} ? 'error'">Person behind the company</label>:
+                    </td>
+                    <td>
+                        <select name="sellerId">
+                            <option th:each="seller : ${sellers}"
+                                    th:text="${seller.getName()}"
+                                    th:field="*{sellerId}"
+                                    th:class="${#fields.hasErrors('sellerId')} ? 'error'"
+                                    th:value="${seller.getId()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Social media links</label>:
+                    </td>
+                    <td id="socials">
+                        <input type="text" name="socialNetworks" th:if="*{socialNetworks.size()==0}"/>
+                        <input type="text" name="socialNetworks" th:each="socialNetwork : *{socialNetworks}" th:value="${socialNetwork}"/>
+                    </td>
+                    <td>
+                       <a id="addButtonSN">Add other link</a> | <a id="removeButtonSN">Remove last link</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Addresses</label>:
+                    </td>
+                    <td id="addresses">
+                        <input type="text" name="addresses" th:if="*{addresses.size()==0}"/>
+                        <input type="text" name="addresses" th:each="address : *{addresses}" th:value="${address}"/>
+                    </td>
+                    <td>
+                        <a id="addButtonAD">Add other link</a> | <a id="removeButtonAD">Remove last link</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" th:value="${creation ? 'Create company' : 'Edit company'}" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

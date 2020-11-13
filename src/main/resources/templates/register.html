@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card-title"></div>
+    <div class="card-body>">
+
+        <form th:action="@{/create}" th:object="${account}" method="post">
+            <div th:remove="tag">
+                <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Error camp</li>
+                </ul>
+            </div>
+            <div class="form-group row">
+                <p>Indica type de cuenta a dar de alta: </p><br/>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" th:value="CLIENT" th:field="*{type}" id="client"
+                           name="type" class="custom-control-input">
+                    <label class="custom-control-label" for="client">Client</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" th:value="SELLER" th:field="*{type}" id="seller"
+                           name="type" class="custom-control-input">
+                    <label class="custom-control-label" for="seller">Seller</label>
+                </div>
+
+
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">User</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{user}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-6">
+                    <input type="password" th:field="*{password}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger" client.
+                        th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Nombre</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{name}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Apellidos</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{secondName}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('secondName')}" th:errors="*{secondName}"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">eMail</label>
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{email}" class="form-control"
+                           th:errorclass="'form-control alert-danger'"/> <small
+                        class="form-text text-danger"
+                        th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <input type="submit" th:value="Send" class="btn btn-secondary"/>
+            </div>
+    </form>
+</div>
+</div>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

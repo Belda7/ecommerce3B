@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <ul>
+        <li th:if="${product.isVisible()}">
+            <img th:src="${product.getImage()}">
+            <table>
+                <tr>
+                    <th>
+                        Product name:
+                    </th>
+                    <td th:text="${product.getName()}"></td>
+                </tr>
+                <tr>
+                    <th>
+                        Price:
+                    </th>
+                    <td th:text="${product.getPrice()}"></td>
+                </tr>
+                <tr>
+                    <th>
+                        Description:
+                    </th>
+                    <td th:text="${product.getDescription()}"></td>
+                </tr>
+            </table>
+        </li>
+        <li th:if="${!product.isVisible()}">
+            This product wasn't found.
+        </li>
+    </ul>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

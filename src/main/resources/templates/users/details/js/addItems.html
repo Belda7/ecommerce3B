@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<script type="text/javascript" th:fragment="javascript">
+    function addAddress() {
+
+        var tableBody = document.getElementById('plantillaItemsAddress').getElementsByTagName("tbody")[0];
+        var id = $('#plantillaItemsAddress tbody tr').length;
+        var address = $('#direccion').val();
+        var fila = document.createElement("tr");
+        fila.id = "address_" + id;
+
+        var col = $('#plantillaItemsAddress tbody tr:last td').length;
+        var celda;
+        for (var c = 0; c < col; c++) {
+            celda = document.createElement("td");
+            switch (c) {
+                case 0:
+                    celda.setAttribute("class", "d-none");
+                    celda.setAttribute("value", id);
+                    celda.setAttribute("name", "item_id[]");
+                    break;
+                case 1:
+                    celda.innerHTML = address;
+                    break;
+                case 2:
+                    var a = document.createElement("a");
+                    a.setAttribute("id", "delete_" + id);
+                    a.href="#";
+                    a.setAttribute("class", "btn btn-danger btn-xs");
+                    a.setAttribute("onclick", "deleteAddress("+id+");");
+                    a.innerHTML = "X";
+                    celda.appendChild(a);
+                    break;
+            }
+            fila.appendChild(celda);
+        }
+        tableBody.appendChild(fila);
+
+    }
+
+    function deleteAddress(id) {
+        var rowCount = $('#plantillaItemsAddress tbody tr').length;
+
+        if (rowCount <= id)
+            alert('No se puede eliminar el encabezado');
+        else
+            $('#plantillaItemsAddress tbody tr')[id].remove();
+    }
+
+
+</script>
+</body>
+</html>

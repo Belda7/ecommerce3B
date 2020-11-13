@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+<header th:replace="layout/layout :: header"></header>
+<main>
+    <div th:replace="layout/layout :: title"></div>
+    <div class="container py-4">
+        <div class="container">
+            <ul id="companies" class="row">
+                <a th:each="company : ${companies}"
+                   th:href="'/companies/company/' + ${company.getName()}">
+                    <div th:replace="layout/layout :: company"></div>
+                </a>
+            </ul>
+        </div>
+        <div th:if="${companies.size() <= 0}">
+            <p>There are no companies added  yet.</p>
+        </div>
+    </div>
+</main>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
